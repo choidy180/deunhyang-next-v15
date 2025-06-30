@@ -1,11 +1,14 @@
 "use client";
 
 import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
 import styled from "styled-components";
 
 const Navigation = () => {
+    const pathname = usePathname();
+    const router = useRouter();
     return (
-        <NavContainer>
+        <NavContainer className={`${pathname.includes('member') && 'none'}`}>
             <div className="logoDiv">
                 Deun Hyang
             </div>
@@ -23,6 +26,7 @@ const Navigation = () => {
                     width={28}
                     height={28}
                     alt="..."
+                    onClick={()=> router.push('/member/login')}
                 />
                 <Image
                     src={'https://deunhyang.com/_idio/img/cart_bk.svg'}
@@ -51,6 +55,10 @@ const NavContainer = styled.div`
     align-items: end;
 
     padding-bottom: 1rem;
+    
+    &.none {
+        display: none !important;
+    }
 
     .logoDiv {
         width: 200px;

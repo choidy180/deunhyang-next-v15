@@ -52,6 +52,10 @@ const GlobalStyle = createGlobalStyle`
         justify-content: start;
         align-items: center;
     }
+
+    input {
+        outline: none;
+    }
 `;
 
 export default GlobalStyle;
