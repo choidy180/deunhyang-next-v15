@@ -1,5 +1,5 @@
 import StyledComponentsRegistry from "../../lib/registry";
-import Navigation from "./components/navigation";
+import Navigation from "../../components/navigation";
 import GlobalStyle from "./GlobalStyle";
 
 export default function RootLayout({

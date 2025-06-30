@@ -2,69 +2,85 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { FcGoogle } from "react-icons/fc";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import GoogleLoginBtn from "../../../../components/googleLoginBtn";
 
 const MemberLogin = () => {
     const router = useRouter();
-
     const [reveal, setReveal] = useState(false);
+
+    const [mounted, setMounted] = useState(false); // 로딩여부
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
     return (
-        <Container>
-            <h3>Deun Hyang</h3>
+        <>
+            {
+                mounted &&
+                (
+                    <Container>
+                        <h3>Deun Hyang</h3>
 
-            <p className="title">로그인</p>
+                        <p className="title">로그인</p>
 
-            <p className="sub">아이디와 비밀번호 입력하기 귀찮으시죠?<br/>구글 회원가입으로 입력없이 간편하게 로그인 하세요.</p>
+                        <p className="sub">아이디와 비밀번호 입력하기 귀찮으시죠?<br/>구글 회원가입으로 입력없이 간편하게 로그인 하세요.</p>
 
-            <div className="btnGoogle">
-                <FcGoogle />
-                <span className="sns_text">구글 계정으로 로그인 / 회원가입</span>
-            </div>
+                        <GoogleLoginBtn type={'login'}/>
 
-            <div className="or">
-                <div />
-                <span>또는</span>
-            </div>
+                        <div className="or">
+                            <div />
+                            <span>또는</span>
+                        </div>
+                        {
+                            mounted  && (
+                                <MemberInput type="text" placeholder="아이디" />
+                            )
+                        }
+                        {
+                            mounted  && (
+                                <div className="inputBox_passwd">
+                                    <MemberInput type={reveal ? 'text' : 'password'} placeholder="패스워드" />
+                                    <Image
+                                        src={ reveal
+                                            ? 'https://storage.keepgrow.com/admin/20230629004733880.png'
+                                            : 'https://storage.keepgrow.com/admin/20230627044452575.png'
+                                        }
+                                        width={40}
+                                        height={reveal ? 40 : 30}
+                                        alt="eyes"
+                                        onClick={()=> setReveal(!reveal)}
+                                    />
+                                </div>
+                            )
+                        }
+                        {
+                            mounted &&
+                            (
+                                <LoginBtn>기존 회원 로그인</LoginBtn>
+                            )
+                        }
 
-            <MemberInput type="text" placeholder="아이디" />
-            <div className="inputBox_passwd">
-                <MemberInput type={reveal ? 'text' : 'password'} placeholder="패스워드" />
-                {
-                    reveal ?
-                    (
-                        <Image
-                            src={'https://storage.keepgrow.com/admin/20230629004733880.png'}
-                            width={40}
-                            height={40}
-                            alt="eyes"
-                            onClick={()=> setReveal(false)}
-                        />
-                    ) :
-                    (
-                        <Image
-                            src={'https://storage.keepgrow.com/admin/20230627044452575.png'}
-                            width={40}
-                            height={30}
-                            alt="eyes"
-                            onClick={()=> setReveal(true)}
-                        />
-                    )
-                }
-            </div>
-            <LoginBtn>기존 회원 로그인</LoginBtn>
-            <UtilMenu>
-                <div className="left">
-                    <span>아이디 찾기</span>
-                    <span className="line">|</span>
-                    <span>비밀번호 찾기</span>
-                </div>
-                <div className="right">
-                    <span onClick={() => router.push('/member/join')}>회원가입</span>
-                </div>
-            </UtilMenu>
-        </Container>
+                        {
+                            mounted &&
+                            (
+                                <UtilMenu>
+                                    <div className="left">
+                                        <span>아이디 찾기</span>
+                                        <span className="line">|</span>
+                                        <span>비밀번호 찾기</span>
+                                    </div>
+                                    <div className="right">
+                                        <span onClick={() => router.push('/member/join')}>회원가입</span>
+                                    </div>
+                                </UtilMenu>
+                            )
+                        }
+                    </Container>
+                )
+            }
+        </>
     )
 }
 
@@ -92,39 +108,6 @@ const Container = styled.div`
         width: 100%;
         font-size: .93rem;
         line-height: 1.2rem;
-    }
-
-    .btnGoogle {
-        width: 100%;
-        height: auto;
-
-        border-radius: 8px;
-        cursor: pointer;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        
-        margin-top: 2rem;
-        padding: .8rem;
-        background-color: #f6f7f9;
-        border: 1.4px solid #222;
-
-        font-size: .8rem;
-
-        svg {
-            position: absolute;
-            left: 1rem;
-            pointer-events: none;
-            user-select:none;
-        }
-    }
-    
-    span.sns_text {
-        font-family: 'Paperlogy-4Regular';
-        pointer-events: none;
-        user-select:none; // 드래그 방지
-        font-size: .8rem;
     }
 
     .or {

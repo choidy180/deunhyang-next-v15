@@ -1,7 +1,7 @@
 "use client";
 
 import styled from "styled-components";
-import MainSlider from "./components/main_slide";
+import MainSlider from "../../components/main_slide";
 
 export default function Home() {
     return (

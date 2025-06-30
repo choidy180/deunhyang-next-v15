@@ -2,13 +2,23 @@
 
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const Navigation = () => {
     const pathname = usePathname();
     const router = useRouter();
+    const [isClient, setIsClient] = useState(false);
+    const [isHidden, setIsHidden] = useState(false);
+
+    useEffect(() => {
+        setIsClient(true);
+        setIsHidden(pathname.includes('member'));
+    }, [pathname]);
+
+    if (!isClient) return null; // 서버와 클라이언트 HTML 일치 위해
     return (
-        <NavContainer className={`${pathname.includes('member') && 'none'}`}>
+        <NavContainer $hide={isHidden}>
             <div className="logoDiv">
                 Deun Hyang
             </div>
@@ -45,7 +55,7 @@ const Navigation = () => {
     )
 }
 
-const NavContainer = styled.div`
+const NavContainer = styled.div<{$hide: boolean}>`
     width: 100%;
     min-width: 980px;  // 최소 980px
     max-width: 1240px; // 최대 1,240px
@@ -56,9 +66,9 @@ const NavContainer = styled.div`
 
     padding-bottom: 1rem;
     
-    &.none {
-        display: none !important;
-    }
+    visibility: ${({ $hide }) => ($hide ? 'hidden' : 'visible')};
+    opacity: ${({ $hide }) => ($hide ? 0 : 1)};
+    pointer-events: ${({ $hide }) => ($hide ? 'none' : 'auto')};
 
     .logoDiv {
         width: 200px;
