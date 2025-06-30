@@ -1,9 +1,11 @@
-"use client"
+"use client";
 
 import styled from "styled-components";
 import { FcGoogle } from "react-icons/fc";
+import { useRouter } from "next/navigation";
 
 const MemberJoin = () => {
+    const router = useRouter();
     return (
         <Container>
             <h3>Deun Hyang</h3>
@@ -22,7 +24,10 @@ const MemberJoin = () => {
                 <span>또는</span>
             </div>
 
-            <div className="joinBtn">
+            <div 
+                className="joinBtn"
+                onClick={()=> router.push(`/member/input`)}
+            >
                 <span className="sns_text">ID / PW 입력이 필요한 회원가입</span>
             </div>
         </Container>
