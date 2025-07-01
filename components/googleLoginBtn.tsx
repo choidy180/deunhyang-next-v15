@@ -4,23 +4,42 @@ import { FcGoogle } from "react-icons/fc";
 import styled from "styled-components";
 import { auth } from "../lib/firebase";
 import { useAuthStore } from "../store/useAuthStore";
+import { useRouter } from "next/navigation";
 
 interface Type {
     type: string;
 }
 
 const GoogleLoginBtn = ({type}:Type) => {
-    const userId = useAuthStore();
+
+    const router = useRouter();
+
+    // 로그인 유저상태 세팅 zustand 상태변화 함수
+    const setUserId = useAuthStore((user) => user.setUserId);
+    const setUserDisplayName = useAuthStore((user) => user.setUserDisplayName);
+    const setUserEmail = useAuthStore((user) => user.setUserEmail);
+    const setUserPhotoURL = useAuthStore((user) => user.setUserPhotoURL);
+    const setUserGrade = useAuthStore((user) => user.setUserGrade);
+    const setRefreshToken = useAuthStore((user) => user.setRefreshToken);
+
     const loginWithGoogle = async () => {
         try {
             // 로그인 기능 제공 회사 (구글)
             const provider = new GoogleAuthProvider();
             const result = await signInWithPopup(auth, provider);
-            console.log('id: ', result.user.tenantId, result.user.email);
-            console.log('name: ', result.user.displayName);
-            console.log('image: ', result.user.photoURL);
-            console.log('grade: ', 0);
-            console.log('token: ', result.user.refreshToken);
+
+            if(result){
+                // 로그인 상태 세팅
+                setUserId(result.user.tenantId ? result.user.tenantId : '');
+                setUserDisplayName(result.user.displayName ? result.user.displayName : '');
+                setUserEmail(result.user.email ? result.user.email : '');
+                setUserPhotoURL(result.user.photoURL ? result.user.photoURL : '');
+                setUserGrade(0);
+                setRefreshToken(result.user.refreshToken ? result.user.refreshToken : '');
+
+                router.push('/');
+            };
+
         } catch (error:any) {
             if (error.code === 'auth/popup-closed-by-user') {
                 console.log('사용자가 로그인 팝업을 닫았습니다.');

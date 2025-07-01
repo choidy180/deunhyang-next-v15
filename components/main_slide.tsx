@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useAuthStore } from "../store/useAuthStore";
 
 const imageList = [
     "https://deunhyang.com/_images/mainBnr_01.jpg",
@@ -10,6 +11,12 @@ const imageList = [
 const MainSlider = () => {
     const [index, setIndex] = useState<number>(0); // 순서
     const [fade, setFade] = useState(true);        // 페이드
+
+    // const userData = useAuthStore((user) => user.userEmail);
+    const [mounted, setMounted] = useState(false); // 로딩여부
+    useEffect(() => {
+        setMounted(true);
+    }, []);
     useEffect(()=> {
         const interval = setInterval(() => {
             setFade(false); // 페이드 아웃
@@ -22,15 +29,22 @@ const MainSlider = () => {
         return () => clearInterval(interval);
     },[]);
     return (
-        <Container>
-            <Image
-                src={imageList[index]}
-                width={1300}
-                height={700}
-                alt="mainBnr_01"
-                className={`${fade ? 'fadeIn' : 'fadeOut'}`}
-            />
-        </Container>
+        <>
+            {
+                mounted &&
+                (
+                    <Container>
+                        <Image
+                            src={imageList[index]}
+                            width={1300}
+                            height={700}
+                            alt="mainBnr_01"
+                            className={`${fade ? 'fadeIn' : 'fadeOut'}`}
+                        />
+                    </Container>
+                )
+            }
+        </>
     )
 }
 
