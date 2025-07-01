@@ -14,6 +14,11 @@ const nextConfig: NextConfig = {
                 hostname: 'storage.keepgrow.com',
                 pathname: '/admin/**',
             },
+            {
+                protocol: 'https',
+                hostname: 'lh3.googleusercontent.com',
+                pathname: '/a/**',
+            }
         ],
     },
 };
