@@ -25,7 +25,7 @@ const MemberLogin = () => {
 
                         <p className="title">로그인</p>
 
-                        <p className="sub">아이디와 비밀번호 입력하기 귀찮으시죠?<br/>구글 회원가입으로 입력없이 간편하게 로그인 하세요.</p>
+                        <p className="sub">아이디와 비밀번호 입력하기 귀찮으시죠?<br/>구글 계정으로 입력없이 간편하게 로그인 하세요.</p>
 
                         <GoogleLoginBtn type={'login'}/>
 

@@ -41,9 +41,12 @@ const GoogleLoginBtn = ({type}:Type) => {
             };
 
         } catch (error:any) {
+            // 선택: 사용자에게 안내 메시지를 띄우거나 무시
             if (error.code === 'auth/popup-closed-by-user') {
                 console.log('사용자가 로그인 팝업을 닫았습니다.');
-                // 선택: 사용자에게 안내 메시지를 띄우거나 무시
+            } else if(error.code === 'auth/cancelled-popup-request') { // 로그인 중복 요청
+                alert('로그인에 문제가 발생하였습니다. 다시 시도해주세요.');
+                window.location.reload();
             } else {
                 console.error('로그인 중 오류 발생:', error);
             }

@@ -23,7 +23,7 @@ const MainSlider = () => {
             setTimeout(()=> {
                 setIndex((prev) => (prev + 1) % imageList.length); // 이미지 변경
                 setFade(true); // 페이드 인
-            }, 300); // 페이드 아웃 시간
+            }, 200); // 페이드 아웃 시간
         }, 5000); // 이미지 전환 주기
 
         return () => clearInterval(interval);
@@ -58,7 +58,7 @@ const Container = styled.div`
     align-items: start;
 
     img {
-        transition: all ease-in-out .15s;
+        transition: all ease-in-out .3s;
     }
     .fadeIn {
         opacity: 1;

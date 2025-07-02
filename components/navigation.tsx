@@ -90,7 +90,7 @@ const Navigation = () => {
                                             userMenu &&
                                             (
                                                 <UserMenuBox>
-                                                    <p>마이페이지</p>
+                                                    <p onClick={()=> router.push('/member')}>마이페이지</p>
                                                     <p onClick={logoutHandler}>로그아웃</p>
                                                 </UserMenuBox>
                                             )

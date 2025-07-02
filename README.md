@@ -34,6 +34,11 @@
 ### 6.6 navigation  유저박스만들고 프로필 사진 클릭시 on/off 되도록 설정
 ### 6.7 로그인, 로그아웃 기능 추가 (구글)
 
+## 7. 프로젝트 점검
+### 7.1 스타일컴포넌트 랜더링 에러 수정 (npm i babel-plugin-styled-components)
+### 7.2 strictMode 끄기 (reactStrictMode: false) / 개발단계 코드 이중실행 제거
+
+
 
 
 
