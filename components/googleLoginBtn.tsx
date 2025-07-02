@@ -15,12 +15,7 @@ const GoogleLoginBtn = ({type}:Type) => {
     const router = useRouter();
 
     // 로그인 유저상태 세팅 zustand 상태변화 함수
-    const setUserId = useAuthStore((user) => user.setUserId);
-    const setUserDisplayName = useAuthStore((user) => user.setUserDisplayName);
-    const setUserEmail = useAuthStore((user) => user.setUserEmail);
-    const setUserPhotoURL = useAuthStore((user) => user.setUserPhotoURL);
-    const setUserGrade = useAuthStore((user) => user.setUserGrade);
-    const setRefreshToken = useAuthStore((user) => user.setRefreshToken);
+    const { setUser } = useAuthStore();
 
     const loginWithGoogle = async () => {
         try {
@@ -30,13 +25,15 @@ const GoogleLoginBtn = ({type}:Type) => {
 
             if(result){
                 // 로그인 상태 세팅
-                setUserId(result.user.tenantId ? result.user.tenantId : '');
-                setUserDisplayName(result.user.displayName ? result.user.displayName : '');
-                setUserEmail(result.user.email ? result.user.email : '');
-                setUserPhotoURL(result.user.photoURL ? result.user.photoURL : '');
-                setUserGrade(0);
-                setRefreshToken(result.user.refreshToken ? result.user.refreshToken : '');
-
+                setUser({
+                    userId : result.user.tenantId ? result.user.tenantId : '',
+                    userDisplayName: result.user.displayName ? result.user.displayName : '',
+                    userEmail: result.user.email ? result.user.email : '',
+                    userPhotoURL: result.user.photoURL ? result.user.photoURL : '',
+                    userGrade: 0,
+                    refreshToken: result.user.refreshToken ? result.user.refreshToken : '',
+                    provider: result.providerId ? result.providerId : ''
+                });
                 router.push('/');
             };
 

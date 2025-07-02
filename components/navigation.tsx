@@ -13,34 +13,19 @@ const Navigation = () => {
 
     const [userMenu, setUserMenu] = useState(false);
 
-    // 로그아웃 핸들러 상태변경 함수
-    const setUserId = useAuthStore((user) => user.setUserId);
-    const setUserDisplayName = useAuthStore((user) => user.setUserDisplayName);
-    const setUserEmail = useAuthStore((user) => user.setUserEmail);
-    const setUserPhotoURL = useAuthStore((user) => user.setUserPhotoURL);
-    const setUserGrade = useAuthStore((user) => user.setUserGrade);
-    const setRefreshToken = useAuthStore((user) => user.setRefreshToken);
-
-    // 유저 정보
-    const userEmail = useAuthStore((user) => user.userEmail);
-    const userPhothURL = useAuthStore((user) => user.userPhotoURL);
+    // 유저상태 초기화, 이메일, 썸네일 가져오기
+    const { resetUser, userEmail, userPhotoURL } = useAuthStore();
 
     const [mounted, setMounted] = useState(false); // 로딩여부
 
     useEffect(() => {
-        setIsHidden(pathname.includes('member'));
+        setIsHidden(pathname.includes('member/'));
         setMounted(true);
     }, [pathname]);
 
     // 로그아웃
     const logoutHandler = () => {
-        setUserId('');
-        setUserDisplayName('');
-        setUserEmail('');
-        setUserPhotoURL('');
-        setUserGrade(0);
-        setRefreshToken('');
-
+        resetUser();
         alert('로그아웃 되었습니다.');
 
         return router.push('/');
@@ -52,8 +37,8 @@ const Navigation = () => {
                 mounted && 
                 (
                     <NavContainer $hide={isHidden}>
-                        <div className="logoDiv">
-                            Deun Hyang
+                        <div className="logoDiv" onClick={()=> router.push('/')}>
+                            <span>Deun Hyang</span>
                         </div>
                         <div className="d1Box">
                             <span>든향</span>
@@ -79,7 +64,7 @@ const Navigation = () => {
                                 ) : (
                                     <div className="photoBox">
                                         <Image
-                                            src={userPhothURL}
+                                            src={userPhotoURL}
                                             width={31}
                                             height={31}
                                             alt="..."
@@ -143,6 +128,10 @@ const NavContainer = styled.div<{$hide: boolean}>`
         display: flex;
         justify-content: start;
         align-items: end;
+
+        span {
+            cursor: pointer;
+        }
     }
 
 
