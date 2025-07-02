@@ -33,6 +33,17 @@ const GlobalStyle = createGlobalStyle`
         font-weight: normal;
         font-style: normal;
     }
+    @font-face {
+        font-family: 'ChosunGs';
+        src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGs.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: 'MaruBuri';
+        src: url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.eot);
+        src: url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.eot?#iefix) format("embedded-opentype"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.woff2) format("woff2"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.woff) format("woff"), url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.ttf) format("truetype");
+    }
     * {
         position: relative;
         margin: 0;
@@ -47,6 +58,7 @@ const GlobalStyle = createGlobalStyle`
         width: 100vw;
         max-width: 100vw;
         min-height: 100vh;
+        overflow-x: hidden;
 
         display: flex;
         flex-direction: column;

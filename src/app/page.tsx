@@ -2,11 +2,13 @@
 
 import styled from "styled-components";
 import MainSlider from "../../components/main_slide";
+import MainProduct from "../../components/main_product";
 
 export default function Home() {
     return (
         <PageContainer>
             <MainSlider/>
+            <MainProduct/>
         </PageContainer>
     );
 }

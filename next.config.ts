@@ -14,6 +14,11 @@ const nextConfig: NextConfig = {
             },
             {
                 protocol: 'https',
+                hostname: 'deunhyang.com',
+                pathname: '/web/product/medium/**', // Deunhyang 이미지 경로
+            },
+            {
+                protocol: 'https',
                 hostname: 'storage.keepgrow.com',
                 pathname: '/admin/**', // Keepgrow 이미지 경로
             },
