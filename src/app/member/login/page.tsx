@@ -5,12 +5,31 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import GoogleLoginBtn from "../../../../components/googleLoginBtn";
+import { loginWithEmail } from "../../../../lib/login";
 
 const MemberLogin = () => {
     const router = useRouter();
-    const [reveal, setReveal] = useState(false);
-
+    const [reveal, setReveal] = useState(false);   // 텍스트 감추기
     const [mounted, setMounted] = useState(false); // 로딩여부
+
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [loading, setLoading] = useState<boolean>(false);
+    const [errorMsg, setErrorMsg] = useState<string>('');
+
+    const handleLogin = async () => {
+        setErrorMsg('');
+        setLoading(true);
+        try {
+            await loginWithEmail(email, password);
+            alert('로그인 성공!');
+        } catch (err: any) {
+            setErrorMsg(err.message || '로그인 실패');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
         setMounted(true);
     }, []);
@@ -35,13 +54,18 @@ const MemberLogin = () => {
                         </div>
                         {
                             mounted  && (
-                                <MemberInput type="text" placeholder="아이디" />
+                                <MemberInput type="text" value={email} onChange={(e)=> setEmail(e.target.value)} placeholder="아이디" />
                             )
                         }
                         {
                             mounted  && (
                                 <div className="inputBox_passwd">
-                                    <MemberInput type={reveal ? 'text' : 'password'} placeholder="패스워드" />
+                                    <MemberInput 
+                                        type={reveal ? 'text' : 'password'} 
+                                        value={password} 
+                                        onChange={(e)=> setPassword(e.target.value)}
+                                        placeholder="패스워드" 
+                                    />
                                     <Image
                                         src={ reveal
                                             ? 'https://storage.keepgrow.com/admin/20230629004733880.png'
@@ -58,7 +82,7 @@ const MemberLogin = () => {
                         {
                             mounted &&
                             (
-                                <LoginBtn>기존 회원 로그인</LoginBtn>
+                                <LoginBtn onClick={handleLogin} disabled={loading}>기존 회원 로그인</LoginBtn>
                             )
                         }
 
