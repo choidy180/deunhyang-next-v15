@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import GoogleLoginBtn from "../../../../components/googleLoginBtn";
 import { loginWithEmail } from "../../../../lib/login";
+import { toast } from "react-toastify";
 
 const MemberLogin = () => {
     const router = useRouter();
@@ -15,16 +16,25 @@ const MemberLogin = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
-    const [errorMsg, setErrorMsg] = useState<string>('');
 
     const handleLogin = async () => {
-        setErrorMsg('');
         setLoading(true);
         try {
+            if(email === ''){
+                toast.error('이메일을 입력하지 않았습니다.');
+            }
+            if(password === ''){
+                toast.error('패스워드를 입력하지 않았습니다.');
+            }
             await loginWithEmail(email, password);
-            alert('로그인 성공!');
-        } catch (err: any) {
-            setErrorMsg(err.message || '로그인 실패');
+        } catch (error: any) {
+            if (error.code === 'auth/user-not-found') {
+                toast.error('해당 이메일로 등록된 사용자가 없습니다.');
+            } else if (error.code === 'auth/wrong-password') {
+                toast.error('비밀번호가 틀렸습니다.');
+            } else {
+                toast.error('로그인에 실패했습니다.');
+            }
         } finally {
             setLoading(false);
         }
